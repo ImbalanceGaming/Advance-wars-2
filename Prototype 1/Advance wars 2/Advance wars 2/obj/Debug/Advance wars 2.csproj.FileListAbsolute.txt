@@ -1,0 +1,6 @@
+F:\wamp\www\Advance wars 2\Prototype 1\Advance wars 2\Advance wars 2\bin\Advance wars 2.dll.config
+F:\wamp\www\Advance wars 2\Prototype 1\Advance wars 2\Advance wars 2\bin\Advance wars 2.dll
+F:\wamp\www\Advance wars 2\Prototype 1\Advance wars 2\Advance wars 2\bin\Advance wars 2.pdb
+F:\wamp\www\Advance wars 2\Prototype 1\Advance wars 2\Advance wars 2\obj\Debug\Advance wars 2.csprojResolveAssemblyReference.cache
+F:\wamp\www\Advance wars 2\Prototype 1\Advance wars 2\Advance wars 2\obj\Debug\Advance wars 2.dll
+F:\wamp\www\Advance wars 2\Prototype 1\Advance wars 2\Advance wars 2\obj\Debug\Advance wars 2.pdb
