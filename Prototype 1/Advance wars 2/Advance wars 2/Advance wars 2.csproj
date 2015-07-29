@@ -19,6 +19,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="app.css" />
+    <Content Include="assets\images\Infantry_Iddle.png" />
+    <Content Include="assets\images\move.png" />
     <Content Include="assets\images\strip.png" />
     <Content Include="assets\images\test.png" />
     <Content Include="index.html" />
@@ -26,12 +28,28 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
-    <TypeScriptCompile Include="Game.ts" />
-    <TypeScriptCompile Include="Map.ts" />
-    <TypeScriptCompile Include="ts\AnimatedSpriteStripObject.ts" />
-    <TypeScriptCompile Include="ts\CanvasImage.ts" />
-    <TypeScriptCompile Include="ts\Point.ts" />
-    <TypeScriptCompile Include="ts\SpriteObject.ts" />
+    <TypeScriptCompile Include="ts\common\ClickAction.ts" />
+    <TypeScriptCompile Include="ts\common\Canvas.ts" />
+    <TypeScriptCompile Include="ts\common\ClickableRectangle.ts" />
+    <TypeScriptCompile Include="ts\common\Rectangle.ts" />
+    <TypeScriptCompile Include="ts\gameState\Game.ts" />
+    <TypeScriptCompile Include="ts\gameState\MoveTileCollection.ts" />
+    <TypeScriptCompile Include="ts\gameState\MoveTile.ts" />
+    <TypeScriptCompile Include="ts\gameState\gameObject.ts" />
+    <TypeScriptCompile Include="ts\gameState\Tile.ts" />
+    <TypeScriptCompile Include="ts\gameState\GameMap.ts" />
+    <TypeScriptCompile Include="ts\presentation\AnimationList.ts" />
+    <TypeScriptCompile Include="ts\presentation\Animation.ts" />
+    <TypeScriptCompile Include="ts\presentation\AnimatedSpriteStripObject.ts" />
+    <TypeScriptCompile Include="ts\common\Point.ts" />
+    <TypeScriptCompile Include="ts\presentation\Action.ts" />
+    <TypeScriptCompile Include="ts\presentation\Move.ts" />
+    <TypeScriptCompile Include="ts\presentation\Select.ts" />
+    <TypeScriptCompile Include="ts\presentation\Presentation.ts" />
+    <TypeScriptCompile Include="ts\presentation\SpriteObject.ts" />
+    <TypeScriptCompile Include="ts\gameState\Unit.ts" />
+    <TypeScriptCompile Include="ts\presentation\Phase.ts" />
+    <TypeScriptCompile Include="ts\presentation\UI.ts" />
   </ItemGroup>
   <ItemGroup>
     <None Include="web.Debug.config">
