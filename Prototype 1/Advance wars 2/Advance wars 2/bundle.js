@@ -384,6 +384,23 @@ var AdvanceWars;
 })(AdvanceWars || (AdvanceWars = {}));
 var AdvanceWars;
 (function (AdvanceWars) {
+    var NormalMove = (function () {
+        function NormalMove(rectangle, northAnimation, eastAnimation, southAnimation, westAnimation) {
+            this.rectangle = rectangle;
+            this.northAnimation = northAnimation;
+            this.eastAnimation = eastAnimation;
+            this.southAnimation = southAnimation;
+            this.westAnimation = westAnimation;
+            this.currentAnimation = "north";
+        }
+        NormalMove.prototype.move = function (path) {
+        };
+        return NormalMove;
+    })();
+    AdvanceWars.NormalMove = NormalMove;
+})(AdvanceWars || (AdvanceWars = {}));
+var AdvanceWars;
+(function (AdvanceWars) {
     var Unit = (function () {
         function Unit(type, tile) {
             this.type = type;
@@ -489,12 +506,50 @@ var AdvanceWars;
 })(AdvanceWars || (AdvanceWars = {}));
 var AdvanceWars;
 (function (AdvanceWars) {
-    var ActionPhase = (function () {
-        function ActionPhase() {
+    var Moving = (function () {
+        function Moving(unit, path, moveSpeed) {
+            this.unit = unit;
+            this.path = path;
+            this.moveSpeed = moveSpeed;
         }
-        return ActionPhase;
+        Moving.prototype.Update = function () {
+        };
+
+        Moving.prototype.Draw = function () {
+        };
+
+        Moving.prototype.MoveAnimation = function () {
+            if (this.path.length == 0) {
+                this.unit.state = "iddle";
+                this.unit.animationList.PlayAnimation("iddle");
+                return;
+            }
+
+            var desinationTile = this.path[this.path.length - 1];
+            var distance = 0;
+            if ((distance = this.unit.rectangle.x - desinationTile.position.x) < 0) {
+                this.unit.rectangle.x += Math.min(this.moveSpeed, Math.abs(distance));
+                if (this.unit.animationList.currentAnimationKey != "moveRight") {
+                    this.unit.animationList.PlayAnimation("moveRight");
+                }
+            } else if ((distance = this.unit.rectangle.x - desinationTile.position.x) > 0) {
+                this.unit.rectangle.x -= Math.min(this.moveSpeed, Math.abs(distance));
+                this.unit.animationList.PlayAnimation("moveLeft");
+                if (this.unit.animationList.currentAnimationKey != "moveLeft") {
+                    this.unit.animationList.PlayAnimation("moveLeft");
+                }
+            } else if ((distance = this.unit.rectangle.y - desinationTile.position.y) < 0) {
+                this.unit.rectangle.y += Math.min(this.moveSpeed, Math.abs(distance));
+            } else if ((distance = this.unit.rectangle.y - desinationTile.position.y) > 0) {
+                this.unit.rectangle.y -= Math.min(this.moveSpeed, Math.abs(distance));
+            }
+
+            if (this.unit.rectangle.x == desinationTile.position.x && this.unit.rectangle.y == desinationTile.position.y)
+                this.path.pop();
+        };
+        return Moving;
     })();
-    AdvanceWars.ActionPhase = ActionPhase;
+    AdvanceWars.Moving = Moving;
 })(AdvanceWars || (AdvanceWars = {}));
 var AdvanceWars;
 (function (AdvanceWars) {
@@ -616,6 +671,7 @@ var AdvanceWars;
             this.animations = animations;
         }
         AnimationList.prototype.PlayAnimation = function (animation) {
+            this.currentAnimationKey = animation;
             this.currentAnimation = this.animations[animation];
             this.currentAnimation.Reset();
         };

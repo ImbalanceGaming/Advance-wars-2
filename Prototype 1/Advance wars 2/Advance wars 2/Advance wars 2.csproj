@@ -38,6 +38,11 @@
     <TypeScriptCompile Include="ts\gameState\gameObject.ts" />
     <TypeScriptCompile Include="ts\gameState\Tile.ts" />
     <TypeScriptCompile Include="ts\gameState\GameMap.ts" />
+    <TypeScriptCompile Include="ts\gameState\Unit\MoveBehaviour\IDraw.ts" />
+    <TypeScriptCompile Include="ts\gameState\Unit\MoveBehaviour\IUpdate.ts" />
+    <TypeScriptCompile Include="ts\gameState\Unit\MoveBehaviour\NormalMove.ts" />
+    <TypeScriptCompile Include="ts\gameState\Unit\MoveBehaviour\IMoveBehaviour.ts" />
+    <TypeScriptCompile Include="ts\gameState\Unit\UnitState\Moving.ts" />
     <TypeScriptCompile Include="ts\presentation\AnimationList.ts" />
     <TypeScriptCompile Include="ts\presentation\Animation.ts" />
     <TypeScriptCompile Include="ts\presentation\AnimatedSpriteStripObject.ts" />
@@ -47,7 +52,7 @@
     <TypeScriptCompile Include="ts\presentation\Select.ts" />
     <TypeScriptCompile Include="ts\presentation\Presentation.ts" />
     <TypeScriptCompile Include="ts\presentation\SpriteObject.ts" />
-    <TypeScriptCompile Include="ts\gameState\Unit.ts" />
+    <TypeScriptCompile Include="ts\gameState\Unit\Unit.ts" />
     <TypeScriptCompile Include="ts\presentation\Phase.ts" />
     <TypeScriptCompile Include="ts\presentation\UI.ts" />
   </ItemGroup>

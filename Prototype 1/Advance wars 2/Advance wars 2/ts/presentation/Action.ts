@@ -1,6 +1,5 @@
 ﻿module AdvanceWars {
-    export class ActionPhase {
-        constructor() {
-        }
+    export interface Action {
+    ():void
     }
 } 
