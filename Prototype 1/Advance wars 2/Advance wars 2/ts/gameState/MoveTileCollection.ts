@@ -1,7 +1,7 @@
 ﻿module AdvanceWars {
     export class MoveTileCollection {
-        moveTiles:MoveTile[] = [];
-        constructor(public unit: Unit) {
+        moveTiles: MoveTile[] = [];
+        constructor(private unit: Unit, private moveAction: (tiles:Tile[]) => void) {
 
             var firstMoveTile = new MoveTile(unit.tile, unit, null, this, 0);
             var explore = [firstMoveTile];
@@ -56,9 +56,8 @@
                 path.push(moveTileCurrent.previous.tile);
                 moveTileCurrent = moveTileCurrent.previous;
             }
-            this.unit.Move(path);
+            this.moveAction(path);
             this.Dispose();
-
         }
     }
 }

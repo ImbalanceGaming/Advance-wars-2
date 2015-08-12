@@ -10,7 +10,7 @@ module AdvanceWars {
         private frameWidth: number;
         private frameHeight: number;
 
-        constructor(position: Point, image: HTMLElement, width:number, height:number, public frames: number, public duration: number, public loop = false) {
+        constructor(position: Point, image: HTMLImageElement, width: number, height: number, public frames: number, public duration: number, public loop = false) {
             super(position, image, width, height);
             this.frameWidth = width / frames;
             this.frameHeight = height;
