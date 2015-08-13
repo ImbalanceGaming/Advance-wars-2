@@ -1,4 +1,4 @@
-﻿var AdvanceWars;
+var AdvanceWars;
 (function (AdvanceWars) {
     var Greeter = (function () {
         function Greeter(element) {
@@ -10,18 +10,14 @@
         }
         Greeter.prototype.start = function () {
             var _this = this;
-            this.timerToken = setInterval(function () {
-                return _this.span.innerHTML = new Date().toUTCString();
-            }, 500);
+            this.timerToken = setInterval(function () { return _this.span.innerHTML = new Date().toUTCString(); }, 500);
         };
-
         Greeter.prototype.stop = function () {
             clearTimeout(this.timerToken);
         };
         return Greeter;
     })();
     AdvanceWars.Greeter = Greeter;
-
     window.onload = function () {
         var el = document.getElementById('content');
         var greeter = new Greeter(el);
@@ -72,7 +68,7 @@ var AdvanceWars;
     AdvanceWars.Rectangle = Rectangle;
 })(AdvanceWars || (AdvanceWars = {}));
 ///<reference path='Rectangle.ts' />
-var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
@@ -94,7 +90,6 @@ var AdvanceWars;
         //}
         function ClickableRectangle(x, y, width, height) {
             _super.call(this, x, y, width, height);
-
             var self = this;
             this.getClickedFunction = function (point) {
                 if (self.click != null && self.Contains(point))
@@ -144,14 +139,9 @@ var AdvanceWars;
             this.timeStep = Math.floor(1000 / this.fps);
             this.canvas = document.getElementById("canvas");
             this.ctx = this.canvas.getContext("2d");
-
-            this.intervalId = setInterval(function () {
-                _this.gameLoop(_this);
-            }, this.timeStep);
-
+            this.intervalId = setInterval(function () { _this.gameLoop(_this); }, this.timeStep);
             this.canvasLocal = new AdvanceWars.Canvas(this.canvas);
             Game.canvas = this.canvasLocal;
-
             // temp
             this.map = new AdvanceWars.GameMap("dude");
             // temp
@@ -161,7 +151,6 @@ var AdvanceWars;
             this.update(this.gameTime);
             this.draw(this.gameTime);
         };
-
         Game.prototype.update = function (gameTime) {
             this.canvasLocal.Update();
             this.map.Update(gameTime);
@@ -170,18 +159,13 @@ var AdvanceWars;
                     this.gameObjects.splice(i, 1);
                     i--;
                 }
-            this.gameObjects.forEach(function (o) {
-                o.Update(gameTime);
-            });
+            this.gameObjects.forEach(function (o) { o.Update(gameTime); });
         };
-
         Game.prototype.draw = function (gameTime) {
             var _this = this;
             this.ctx.clearRect(0, 0, this.canvas.clientWidth, this.canvas.clientHeight);
             this.map.Draw(this.ctx, gameTime);
-            this.gameObjects.forEach(function (o) {
-                o.Draw(_this.ctx, gameTime);
-            });
+            this.gameObjects.forEach(function (o) { o.Draw(_this.ctx, gameTime); });
         };
         return Game;
     })();
@@ -196,21 +180,11 @@ var AdvanceWars;
             this.initMap();
         }
         GameMap.prototype.Update = function (gameTime) {
-            this.tiles.forEach(function (a) {
-                a.forEach(function (tile) {
-                    tile.Update(gameTime);
-                });
-            });
+            this.tiles.forEach(function (a) { a.forEach(function (tile) { tile.Update(gameTime); }); });
         };
-
         GameMap.prototype.Draw = function (ctx, gameTime) {
-            this.tiles.forEach(function (a) {
-                a.forEach(function (tile) {
-                    tile.Draw(ctx, gameTime);
-                });
-            });
+            this.tiles.forEach(function (a) { a.forEach(function (tile) { tile.Draw(ctx, gameTime); }); });
         };
-
         GameMap.prototype.initMap = function () {
             for (var x = 0; x < 10; x++) {
                 this.tiles.push([]);
@@ -227,7 +201,7 @@ var AdvanceWars;
 (function (AdvanceWars) {
     var MoveTile = (function () {
         function MoveTile(tile, unit, previous, collection, distance) {
-            if (typeof distance === "undefined") { distance = 0; }
+            if (distance === void 0) { distance = 0; }
             this.tile = tile;
             this.unit = unit;
             this.previous = previous;
@@ -235,9 +209,7 @@ var AdvanceWars;
             this.distance = distance;
             this.rectangle = new AdvanceWars.ClickableRectangle(tile.position.x, tile.position.y, 50, 50);
             var self = this;
-            this.rectangle.click = function () {
-                self.Move(self);
-            };
+            this.rectangle.click = function () { self.Move(self); };
             var image = new Image();
             image.src = "assets/images/move.png";
             this.animation = new AdvanceWars.Animation(image, 50, 50, this.rectangle, 1, 1000);
@@ -245,15 +217,12 @@ var AdvanceWars;
         MoveTile.prototype.Update = function (gametime) {
             this.animation.Update(gametime);
         };
-
         MoveTile.prototype.Draw = function (ctx, gametime) {
             this.animation.Draw(ctx, gametime);
         };
-
         MoveTile.prototype.Move = function (self) {
             self.collection.Move(self);
         };
-
         MoveTile.prototype.Dispose = function () {
             this.rectangle.Dispose();
         };
@@ -264,8 +233,9 @@ var AdvanceWars;
 var AdvanceWars;
 (function (AdvanceWars) {
     var MoveTileCollection = (function () {
-        function MoveTileCollection(unit) {
+        function MoveTileCollection(unit, moveAction) {
             this.unit = unit;
+            this.moveAction = moveAction;
             this.moveTiles = [];
             var firstMoveTile = new AdvanceWars.MoveTile(unit.tile, unit, null, this, 0);
             var explore = [firstMoveTile];
@@ -275,14 +245,11 @@ var AdvanceWars;
                 for (var j = 0; j < AdvanceWars.Game.current.map.tiles[i].length; j++)
                     explored[i].push(9999);
             }
-
             while (explore.length > 0) {
                 // sort
                 var exploreTile = explore.pop();
                 this.Scout(exploreTile, this.moveTiles, explore, explored);
-                explore.sort(function (t1, t2) {
-                    return t2.previous.distance - t1.previous.distance;
-                });
+                explore.sort(function (t1, t2) { return t2.previous.distance - t1.previous.distance; });
             }
         }
         // TODO: Needs refactoring
@@ -297,30 +264,22 @@ var AdvanceWars;
                 adjacentTiles.forEach(function (t) {
                     explore.push(new AdvanceWars.MoveTile(t, _this.unit, moveTile, _this));
                 });
-            } else {
+            }
+            else {
                 moveTile.Dispose();
             }
         };
-
         MoveTileCollection.prototype.Dispose = function () {
-            this.moveTiles.forEach(function (m) {
-                m.Dispose();
-            });
+            this.moveTiles.forEach(function (m) { m.Dispose(); });
             var i = AdvanceWars.Game.current.gameObjects.indexOf(this);
             AdvanceWars.Game.current.gameObjects[i] = null;
         };
-
         MoveTileCollection.prototype.Update = function (gametime) {
-            this.moveTiles.forEach(function (m) {
-                return m.Update(gametime);
-            });
+            this.moveTiles.forEach(function (m) { return m.Update(gametime); });
         };
         MoveTileCollection.prototype.Draw = function (ctx, gametime) {
-            this.moveTiles.forEach(function (m) {
-                return m.Draw(ctx, gametime);
-            });
+            this.moveTiles.forEach(function (m) { return m.Draw(ctx, gametime); });
         };
-
         MoveTileCollection.prototype.Move = function (moveTile) {
             var moveTileCurrent = moveTile;
             var path = [moveTile.tile];
@@ -328,7 +287,7 @@ var AdvanceWars;
                 path.push(moveTileCurrent.previous.tile);
                 moveTileCurrent = moveTileCurrent.previous;
             }
-            this.unit.Move(path);
+            this.moveAction(path);
             this.Dispose();
         };
         return MoveTileCollection;
@@ -342,10 +301,8 @@ var AdvanceWars;
             this.type = type;
             this.index = index;
             this.position = new AdvanceWars.Point(index.x * 50, index.y * 50);
-
             // temp
             var random = Math.random() * 100;
-
             if (random < 5)
                 this.unit = new AdvanceWars.Unit("soldier", this);
             // temp
@@ -356,17 +313,14 @@ var AdvanceWars;
             if (this.unit != null)
                 this.unit.Update(gameTime);
         };
-
         Tile.prototype.Draw = function (ctx, gameTime) {
             if (this.animationList != null)
                 this.animationList.Draw(ctx, gameTime);
             if (this.unit != null)
                 this.unit.Draw(ctx, gameTime);
         };
-
         Tile.prototype.GetAdjacentTiles = function () {
             var tiles = [];
-
             if (this.index.x - 1 >= 0)
                 tiles.push(AdvanceWars.Game.current.map.tiles[this.index.x - 1][this.index.y]);
             if (this.index.y - 1 >= 0)
@@ -375,7 +329,6 @@ var AdvanceWars;
                 tiles.push(AdvanceWars.Game.current.map.tiles[this.index.x + 1][this.index.y]);
             if (this.index.y + 1 < AdvanceWars.Game.current.map.tiles[0].length)
                 tiles.push(AdvanceWars.Game.current.map.tiles[this.index.x][this.index.y + 1]);
-
             return tiles;
         };
         return Tile;
@@ -384,9 +337,21 @@ var AdvanceWars;
 })(AdvanceWars || (AdvanceWars = {}));
 var AdvanceWars;
 (function (AdvanceWars) {
+    var BehaviorTRee = (function () {
+        function BehaviorTRee() {
+        }
+        BehaviorTRee.prototype.activate = function () {
+        };
+        return BehaviorTRee;
+    })();
+    AdvanceWars.BehaviorTRee = BehaviorTRee;
+})(AdvanceWars || (AdvanceWars = {}));
+var AdvanceWars;
+(function (AdvanceWars) {
     var NormalMove = (function () {
-        function NormalMove(rectangle, northAnimation, eastAnimation, southAnimation, westAnimation) {
-            this.rectangle = rectangle;
+        function NormalMove(unit, path, northAnimation, eastAnimation, southAnimation, westAnimation) {
+            this.unit = unit;
+            this.path = path;
             this.northAnimation = northAnimation;
             this.eastAnimation = eastAnimation;
             this.southAnimation = southAnimation;
@@ -394,6 +359,24 @@ var AdvanceWars;
             this.currentAnimation = "north";
         }
         NormalMove.prototype.move = function (path) {
+            this.pathIndex = 0;
+            this.unitPreviousPosition = this.unit.tile;
+        };
+        NormalMove.prototype.revert = function () {
+            this.unit.tile.unit = null;
+            this.unit.tile = this.unitPreviousPosition;
+            this.unitPreviousPosition.unit = this.unit;
+        };
+        NormalMove.prototype.instantiate = function () {
+            this.moveTileCollection = new AdvanceWars.MoveTileCollection(this.unit, this.move);
+        };
+        NormalMove.prototype.update = function (gameTime) {
+            if (this.moveTileCollection != null)
+                this.moveTileCollection.Update(gameTime);
+        };
+        NormalMove.prototype.draw = function (ctx, gameTime) {
+            if (this.moveTileCollection != null)
+                this.moveTileCollection.Draw(ctx, gameTime);
         };
         return NormalMove;
     })();
@@ -412,9 +395,7 @@ var AdvanceWars;
             this.rectangle = new AdvanceWars.ClickableRectangle(tile.position.x, tile.position.y, 50, 50);
             this.animationList = new AdvanceWars.AnimationList();
             var self = this;
-            this.rectangle.click = function () {
-                self.CreateMoveTiles(self);
-            };
+            this.rectangle.click = function () { self.CreateMoveTiles(self); };
             var image = new Image();
             image.src = "assets/images/infantry_iddle.png";
             this.animationList.animations["iddle"] = new AdvanceWars.Animation(image, 64, 16, this.rectangle, 4, 1000);
@@ -429,7 +410,6 @@ var AdvanceWars;
         Unit.prototype.Update = function (gameTime) {
             if (this.animationList != null)
                 this.animationList.Update(gameTime);
-
             switch (this.state) {
                 case "iddle":
                     break;
@@ -439,23 +419,18 @@ var AdvanceWars;
                 default:
             }
         };
-
         Unit.prototype.Draw = function (ctx, gameTime) {
             if (this.animationList != null)
                 this.animationList.Draw(ctx, gameTime);
         };
-
         Unit.prototype.GetReachableTiles = function () {
             var index = this.tile.index;
             var reachableTiles = [AdvanceWars.Game.current.map.tiles[index.x + 1][index.y]];
-
             return reachableTiles;
         };
-
         Unit.prototype.CreateMoveTiles = function (self) {
             AdvanceWars.Game.current.gameObjects.push(new AdvanceWars.MoveTileCollection(self));
         };
-
         Unit.prototype.Move = function (tiles) {
             this.tile.unit = null;
             this.tile = tiles[0];
@@ -463,7 +438,6 @@ var AdvanceWars;
             this.state = "moving";
             this.tile.unit = this;
         };
-
         Unit.prototype.MoveAnimation = function () {
             if (this.path.length == 0) {
                 this.state = "iddle";
@@ -471,7 +445,6 @@ var AdvanceWars;
                 this.animationList.PlayAnimation("iddle");
                 return;
             }
-
             var desinationTile = this.path[this.path.length - 1];
             var distance = 0;
             if ((distance = this.rectangle.x - desinationTile.position.x) < 0) {
@@ -480,23 +453,24 @@ var AdvanceWars;
                     this.currentAnimation = "moveRight";
                     this.animationList.PlayAnimation("moveRight");
                 }
-            } else if ((distance = this.rectangle.x - desinationTile.position.x) > 0) {
+            }
+            else if ((distance = this.rectangle.x - desinationTile.position.x) > 0) {
                 this.rectangle.x -= Math.min(this.moveSpeedAnimation, Math.abs(distance));
                 this.animationList.PlayAnimation("moveLeft");
                 if (this.currentAnimation != "moveLeft") {
                     this.currentAnimation = "moveLeft";
                     this.animationList.PlayAnimation("moveLeft");
                 }
-            } else if ((distance = this.rectangle.y - desinationTile.position.y) < 0) {
+            }
+            else if ((distance = this.rectangle.y - desinationTile.position.y) < 0) {
                 this.rectangle.y += Math.min(this.moveSpeedAnimation, Math.abs(distance));
-            } else if ((distance = this.rectangle.y - desinationTile.position.y) > 0) {
+            }
+            else if ((distance = this.rectangle.y - desinationTile.position.y) > 0) {
                 this.rectangle.y -= Math.min(this.moveSpeedAnimation, Math.abs(distance));
             }
-
             if (this.rectangle.x == desinationTile.position.x && this.rectangle.y == desinationTile.position.y)
                 this.path.pop();
         };
-
         Unit.prototype.Dispose = function () {
             this.rectangle.Dispose();
         };
@@ -514,17 +488,14 @@ var AdvanceWars;
         }
         Moving.prototype.Update = function () {
         };
-
         Moving.prototype.Draw = function () {
         };
-
         Moving.prototype.MoveAnimation = function () {
             if (this.path.length == 0) {
                 this.unit.state = "iddle";
                 this.unit.animationList.PlayAnimation("iddle");
                 return;
             }
-
             var desinationTile = this.path[this.path.length - 1];
             var distance = 0;
             if ((distance = this.unit.rectangle.x - desinationTile.position.x) < 0) {
@@ -532,18 +503,20 @@ var AdvanceWars;
                 if (this.unit.animationList.currentAnimationKey != "moveRight") {
                     this.unit.animationList.PlayAnimation("moveRight");
                 }
-            } else if ((distance = this.unit.rectangle.x - desinationTile.position.x) > 0) {
+            }
+            else if ((distance = this.unit.rectangle.x - desinationTile.position.x) > 0) {
                 this.unit.rectangle.x -= Math.min(this.moveSpeed, Math.abs(distance));
                 this.unit.animationList.PlayAnimation("moveLeft");
                 if (this.unit.animationList.currentAnimationKey != "moveLeft") {
                     this.unit.animationList.PlayAnimation("moveLeft");
                 }
-            } else if ((distance = this.unit.rectangle.y - desinationTile.position.y) < 0) {
+            }
+            else if ((distance = this.unit.rectangle.y - desinationTile.position.y) < 0) {
                 this.unit.rectangle.y += Math.min(this.moveSpeed, Math.abs(distance));
-            } else if ((distance = this.unit.rectangle.y - desinationTile.position.y) > 0) {
+            }
+            else if ((distance = this.unit.rectangle.y - desinationTile.position.y) > 0) {
                 this.unit.rectangle.y -= Math.min(this.moveSpeed, Math.abs(distance));
             }
-
             if (this.unit.rectangle.x == desinationTile.position.x && this.unit.rectangle.y == desinationTile.position.y)
                 this.path.pop();
         };
@@ -573,7 +546,7 @@ var AdvanceWars;
     var AnimatedSpriteStripObject = (function (_super) {
         __extends(AnimatedSpriteStripObject, _super);
         function AnimatedSpriteStripObject(position, image, width, height, frames, duration, loop) {
-            if (typeof loop === "undefined") { loop = false; }
+            if (loop === void 0) { loop = false; }
             _super.call(this, position, image, width, height);
             this.frames = frames;
             this.duration = duration;
@@ -592,11 +565,9 @@ var AdvanceWars;
             this.currentAnimationTime = (this.currentAnimationTime + elapsedTime) % this.duration;
             this.currentFrame = Math.floor(this.frames * (this.currentAnimationTime / this.duration));
         };
-
         AnimatedSpriteStripObject.prototype.Draw = function (ctx, gameTime) {
             ctx.drawImage(this.image, this.frameWidth * this.currentFrame, 0, this.frameWidth, this.frameHeight, this.position.x, this.position.y, this.frameWidth, this.frameHeight);
         };
-
         AnimatedSpriteStripObject.prototype.Reset = function () {
             this.currentAnimationTime = 0;
         };
@@ -613,13 +584,13 @@ frameRows : number;
 frameCollums : number;
 duration : number;
 loop: bool;
-*/
+*/ 
 ///<reference path='SpriteObject.ts' />
 var AdvanceWars;
 (function (AdvanceWars) {
     var Animation = (function () {
         function Animation(image, width, height, rectangle, frames, duration, loop) {
-            if (typeof loop === "undefined") { loop = false; }
+            if (loop === void 0) { loop = false; }
             this.image = image;
             this.width = width;
             this.height = height;
@@ -641,11 +612,9 @@ var AdvanceWars;
             this.currentAnimationTime = (this.currentAnimationTime + elapsedTime) % this.duration;
             this.currentFrame = Math.floor(this.frames * (this.currentAnimationTime / this.duration));
         };
-
         Animation.prototype.Draw = function (ctx, gameTime) {
             ctx.drawImage(this.image, this.frameWidth * this.currentFrame, 0, this.frameWidth, this.frameHeight, this.rectangle.x, this.rectangle.y, this.rectangle.width, this.rectangle.height);
         };
-
         Animation.prototype.Reset = function () {
             this.currentAnimationTime = 0;
         };
@@ -662,12 +631,12 @@ frameRows : number;
 frameCollums : number;
 duration : number;
 loop: bool;
-*/
+*/ 
 var AdvanceWars;
 (function (AdvanceWars) {
     var AnimationList = (function () {
         function AnimationList(animations) {
-            if (typeof animations === "undefined") { animations = []; }
+            if (animations === void 0) { animations = []; }
             this.animations = animations;
         }
         AnimationList.prototype.PlayAnimation = function (animation) {
@@ -675,12 +644,10 @@ var AdvanceWars;
             this.currentAnimation = this.animations[animation];
             this.currentAnimation.Reset();
         };
-
         AnimationList.prototype.Update = function (gameTime) {
             if (this.currentAnimation != null)
                 this.currentAnimation.Update(gameTime);
         };
-
         AnimationList.prototype.Draw = function (ctx, gameTime) {
             if (this.currentAnimation != null)
                 this.currentAnimation.Draw(ctx, gameTime);
@@ -716,7 +683,6 @@ var AdvanceWars;
         }
         Presentation.prototype.Update = function () {
         };
-
         Presentation.prototype.Draw = function (game) {
         };
         return Presentation;

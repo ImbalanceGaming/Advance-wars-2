@@ -4,3 +4,9 @@ F:\wamp\www\Advance wars 2\Prototype 1\Advance wars 2\Advance wars 2\bin\Advance
 F:\wamp\www\Advance wars 2\Prototype 1\Advance wars 2\Advance wars 2\obj\Debug\Advance wars 2.csprojResolveAssemblyReference.cache
 F:\wamp\www\Advance wars 2\Prototype 1\Advance wars 2\Advance wars 2\obj\Debug\Advance wars 2.dll
 F:\wamp\www\Advance wars 2\Prototype 1\Advance wars 2\Advance wars 2\obj\Debug\Advance wars 2.pdb
+C:\Projects\Advance wars 2\Prototype 1\Advance wars 2\Advance wars 2\obj\Debug\Advance wars 2.csprojResolveAssemblyReference.cache
+C:\Projects\Advance wars 2\Prototype 1\Advance wars 2\Advance wars 2\obj\Debug\Advance wars 2.dll
+C:\Projects\Advance wars 2\Prototype 1\Advance wars 2\Advance wars 2\bin\Advance wars 2.dll.config
+C:\Projects\Advance wars 2\Prototype 1\Advance wars 2\Advance wars 2\bin\Advance wars 2.dll
+C:\Projects\Advance wars 2\Prototype 1\Advance wars 2\Advance wars 2\bin\Advance wars 2.pdb
+C:\Projects\Advance wars 2\Prototype 1\Advance wars 2\Advance wars 2\obj\Debug\Advance wars 2.pdb
