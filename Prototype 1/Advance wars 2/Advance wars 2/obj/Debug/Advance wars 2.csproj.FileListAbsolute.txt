@@ -10,3 +10,9 @@ C:\Projects\Advance wars 2\Prototype 1\Advance wars 2\Advance wars 2\bin\Advance
 C:\Projects\Advance wars 2\Prototype 1\Advance wars 2\Advance wars 2\bin\Advance wars 2.dll
 C:\Projects\Advance wars 2\Prototype 1\Advance wars 2\Advance wars 2\bin\Advance wars 2.pdb
 C:\Projects\Advance wars 2\Prototype 1\Advance wars 2\Advance wars 2\obj\Debug\Advance wars 2.pdb
+C:\Users\Evert\Desktop\Frank\advance wars\Prototype 1\Advance wars 2\Advance wars 2\bin\Advance wars 2.dll.config
+C:\Users\Evert\Desktop\Frank\advance wars\Prototype 1\Advance wars 2\Advance wars 2\bin\Advance wars 2.dll
+C:\Users\Evert\Desktop\Frank\advance wars\Prototype 1\Advance wars 2\Advance wars 2\bin\Advance wars 2.pdb
+C:\Users\Evert\Desktop\Frank\advance wars\Prototype 1\Advance wars 2\Advance wars 2\obj\Debug\Advance wars 2.csprojResolveAssemblyReference.cache
+C:\Users\Evert\Desktop\Frank\advance wars\Prototype 1\Advance wars 2\Advance wars 2\obj\Debug\Advance wars 2.dll
+C:\Users\Evert\Desktop\Frank\advance wars\Prototype 1\Advance wars 2\Advance wars 2\obj\Debug\Advance wars 2.pdb

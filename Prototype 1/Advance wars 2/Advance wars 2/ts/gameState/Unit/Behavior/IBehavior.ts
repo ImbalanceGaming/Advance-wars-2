@@ -1,5 +1,5 @@
 ﻿module AdvanceWars {
-    export interface IBehavior {
+    export interface IBehavior extends IUpdate, IDraw {
         revert: () => void;
         instantiate: () => void;
     }

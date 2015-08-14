@@ -9,8 +9,8 @@
 
             // temp
             var random = Math.random() * 100;
-            
-            if (random < 5)
+
+            if (this.position.x == 0 && this.position.y == 0)
                 this.unit = new Unit("soldier",this);
             // temp
 

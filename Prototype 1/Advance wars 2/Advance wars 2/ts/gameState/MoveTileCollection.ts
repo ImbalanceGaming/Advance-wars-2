@@ -38,8 +38,7 @@
 
         Dispose() {
             this.moveTiles.forEach(m => { m.Dispose(); });
-            var i = Game.current.gameObjects.indexOf(this);
-            Game.current.gameObjects[i] = null;
+            
         }
 
         Update(gametime: number) {
@@ -56,8 +55,10 @@
                 path.push(moveTileCurrent.previous.tile);
                 moveTileCurrent = moveTileCurrent.previous;
             }
-            this.moveAction(path);
+            path.reverse();
             this.Dispose();
+            this.moveAction(path);
+            
         }
     }
 }
