@@ -15,6 +15,7 @@
 
         Update(gametime:number) {
             this.animation.Update(gametime);
+            this.rectangle.update(gametime);
         }
 
         Draw(ctx:CanvasRenderingContext2D, gametime:number) {

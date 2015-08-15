@@ -1,8 +1,12 @@
 ﻿module AdvanceWars {
     export class Canvas {
+        // Private click, is async
         private click: boolean;
-        private clickPoint:Point;
-        clickEvent :any[] = [];
+        private clickPoint: Point;
+
+        // Public click, not async
+        public clicked: boolean;
+        public clickedAt: Point;
 
         constructor(public canvas: HTMLElement) {
             var self = this;
@@ -14,11 +18,13 @@
 
         Update() {
             if (this.click) {
-                this.clickEvent.forEach(func => {
-                    func(this.clickPoint);
-                    //func();
-                });
+                this.clicked = true;
+                this.clickedAt = this.clickPoint;
                 this.click = false;
+            }
+            else
+            {
+                this.clicked = false;
             }
         }
     }

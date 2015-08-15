@@ -30,7 +30,6 @@ var AdvanceWars;
     var Canvas = (function () {
         function Canvas(canvas) {
             this.canvas = canvas;
-            this.clickEvent = [];
             var self = this;
             this.canvas.onclick = function (mouseEvent) {
                 self.clickPoint = new AdvanceWars.Point(mouseEvent.offsetX, mouseEvent.offsetY);
@@ -38,13 +37,13 @@ var AdvanceWars;
             };
         }
         Canvas.prototype.Update = function () {
-            var _this = this;
             if (this.click) {
-                this.clickEvent.forEach(function (func) {
-                    func(_this.clickPoint);
-                    //func();
-                });
+                this.clicked = true;
+                this.clickedAt = this.clickPoint;
                 this.click = false;
+            }
+            else {
+                this.clicked = false;
             }
         };
         return Canvas;
@@ -78,28 +77,15 @@ var AdvanceWars;
 (function (AdvanceWars) {
     var ClickableRectangle = (function (_super) {
         __extends(ClickableRectangle, _super);
-        //get click(): any {
-        //    return this._click;
-        //}
-        //set click(clickFunction: any) {
-        //    var index = Game.canvas.clickEvent.indexOf(this._click);
-        //    if (index != -1)
-        //        Game.canvas.clickEvent.splice(index, 1);
-        //    Game.canvas.clickEvent.push(clickFunction);
-        //    this._click = clickFunction;
-        //}
         function ClickableRectangle(x, y, width, height) {
             _super.call(this, x, y, width, height);
-            var self = this;
-            this.getClickedFunction = function (point) {
-                if (self.click != null && self.Contains(point))
-                    self.click();
-            };
-            AdvanceWars.Game.canvas.clickEvent.push(this.getClickedFunction);
         }
+        ClickableRectangle.prototype.update = function (gameTime) {
+            if (AdvanceWars.Game.canvas.clicked && this.Contains(AdvanceWars.Game.canvas.clickedAt)) {
+                this.click();
+            }
+        };
         ClickableRectangle.prototype.Dispose = function () {
-            var index = AdvanceWars.Game.canvas.clickEvent.indexOf(this.getClickedFunction);
-            AdvanceWars.Game.canvas.clickEvent.splice(index, 1);
         };
         return ClickableRectangle;
     })(AdvanceWars.Rectangle);
@@ -228,6 +214,7 @@ var AdvanceWars;
         }
         MoveTile.prototype.Update = function (gametime) {
             this.animation.Update(gametime);
+            this.rectangle.update(gametime);
         };
         MoveTile.prototype.Draw = function (ctx, gametime) {
             this.animation.Draw(ctx, gametime);
@@ -348,25 +335,25 @@ var AdvanceWars;
 })(AdvanceWars || (AdvanceWars = {}));
 var AdvanceWars;
 (function (AdvanceWars) {
-    var BehaviorTRee = (function () {
-        function BehaviorTRee() {
+    var BehaviorTree = (function () {
+        function BehaviorTree() {
         }
-        BehaviorTRee.prototype.activate = function () {
+        BehaviorTree.prototype.activate = function () {
             this.active = true;
             this.current = this.root;
             this.current.instantiate();
         };
-        BehaviorTRee.prototype.update = function (gameTime) {
+        BehaviorTree.prototype.update = function (gameTime) {
             if (this.active)
                 this.current.update(gameTime);
         };
-        BehaviorTRee.prototype.draw = function (ctx, gameTime) {
+        BehaviorTree.prototype.draw = function (ctx, gameTime) {
             if (this.active)
                 this.current.draw(ctx, gameTime);
         };
-        return BehaviorTRee;
+        return BehaviorTree;
     })();
-    AdvanceWars.BehaviorTRee = BehaviorTRee;
+    AdvanceWars.BehaviorTree = BehaviorTree;
 })(AdvanceWars || (AdvanceWars = {}));
 var AdvanceWars;
 (function (AdvanceWars) {
@@ -457,6 +444,56 @@ var AdvanceWars;
 })(AdvanceWars || (AdvanceWars = {}));
 var AdvanceWars;
 (function (AdvanceWars) {
+    var SelectBehaviour = (function () {
+        function SelectBehaviour(unit) {
+            this.unit = unit;
+        }
+        SelectBehaviour.prototype.instantiate = function () {
+            var _this = this;
+            this.selectOptions.forEach(function (s) {
+                s.rectangle.x = _this.unit.rectangle.x;
+            });
+        };
+        SelectBehaviour.prototype.revert = function () {
+        };
+        SelectBehaviour.prototype.update = function (gameTime) {
+            this.selectOptions.forEach(function (s) { s.update(gameTime); });
+        };
+        SelectBehaviour.prototype.draw = function (ctx, gameTime) {
+            this.selectOptions.forEach(function (s) { s.update(gameTime); });
+        };
+        return SelectBehaviour;
+    })();
+    AdvanceWars.SelectBehaviour = SelectBehaviour;
+})(AdvanceWars || (AdvanceWars = {}));
+var AdvanceWars;
+(function (AdvanceWars) {
+    var SelectOption = (function () {
+        function SelectOption(rectangle, name, behaviour, condition, behaviourTree) {
+            this.rectangle = rectangle;
+            this.name = name;
+            this.behaviour = behaviour;
+            this.condition = condition;
+            this.behaviourTree = behaviourTree;
+            var self = this;
+            this.rectangle.click = function () {
+                self.behaviourTree.current = behaviour;
+            };
+        }
+        SelectOption.prototype.update = function (gameTime) {
+            if (this.condition)
+                this.rectangle.update(gameTime);
+        };
+        SelectOption.prototype.draw = function (ctx, gameTime) {
+            if (this.condition)
+                ctx.fillText(this.name, this.rectangle.x, this.rectangle.y);
+        };
+        return SelectOption;
+    })();
+    AdvanceWars.SelectOption = SelectOption;
+})(AdvanceWars || (AdvanceWars = {}));
+var AdvanceWars;
+(function (AdvanceWars) {
     var Unit = (function () {
         function Unit(type, tile) {
             this.type = type;
@@ -468,7 +505,7 @@ var AdvanceWars;
             this.rectangle = new AdvanceWars.ClickableRectangle(tile.position.x, tile.position.y, 50, 50);
             this.animationList = new AdvanceWars.AnimationList();
             var self = this;
-            this.behaviourTree = new AdvanceWars.BehaviorTRee();
+            this.behaviourTree = new AdvanceWars.BehaviorTree();
             var moveBehaviour = new AdvanceWars.NormalMove(self, this.behaviourTree, "moveLeft", "moveLeft", "moveLeft", "moveLeft", "iddle");
             this.behaviourTree.root = moveBehaviour;
             this.rectangle.click = function () { self.behaviourTree.activate(); };
@@ -486,6 +523,7 @@ var AdvanceWars;
         Unit.prototype.Update = function (gameTime) {
             if (this.animationList != null)
                 this.animationList.Update(gameTime);
+            this.rectangle.update(gameTime);
             this.behaviourTree.update(gameTime);
         };
         Unit.prototype.Draw = function (ctx, gameTime) {

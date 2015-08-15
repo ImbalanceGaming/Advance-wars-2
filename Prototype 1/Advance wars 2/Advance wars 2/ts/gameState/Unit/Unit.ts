@@ -8,13 +8,13 @@
         state: string = "iddle";
         currentAnimation:string = "iddle";
         path: Tile[];
-        behaviourTree: BehaviorTRee;
+        behaviourTree: BehaviorTree;
 
         constructor(public type: string, public tile: Tile) {
             this.rectangle = new ClickableRectangle(tile.position.x, tile.position.y,50,50);
             this.animationList = new AnimationList();
             var self = this;
-            this.behaviourTree = new BehaviorTRee();
+            this.behaviourTree = new BehaviorTree();
             var moveBehaviour = new NormalMove(self, this.behaviourTree, "moveLeft", "moveLeft", "moveLeft", "moveLeft", "iddle");
             this.behaviourTree.root = moveBehaviour;
             this.rectangle.click = function () { self.behaviourTree.activate(); };
@@ -32,6 +32,7 @@
 
         Update(gameTime:number) {
             if (this.animationList != null) this.animationList.Update(gameTime);
+            this.rectangle.update(gameTime);
             this.behaviourTree.update(gameTime);
         }
 

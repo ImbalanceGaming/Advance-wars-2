@@ -9,7 +9,7 @@
         private self: NormalMove;
 
 
-        constructor(private unit: Unit, private behaviourTree: BehaviorTRee, private northAnimation: string, private eastAnimation: string, private southAnimation: string, private westAnimation: string, private iddleAnimation: string) {
+        constructor(private unit: Unit, private behaviourTree: BehaviorTree, private northAnimation: string, private eastAnimation: string, private southAnimation: string, private westAnimation: string, private iddleAnimation: string) {
             this.currentAnimation = iddleAnimation;
             this.self = this;
         }

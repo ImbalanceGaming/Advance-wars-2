@@ -40,11 +40,12 @@
     <TypeScriptCompile Include="ts\gameState\Tile.ts" />
     <TypeScriptCompile Include="ts\gameState\GameMap.ts" />
     <TypeScriptCompile Include="ts\gameState\Unit\Behavior\IBehavior.ts" />
-    <TypeScriptCompile Include="ts\gameState\Unit\Behavior\MoveBehaviour\IDraw.ts" />
-    <TypeScriptCompile Include="ts\gameState\Unit\Behavior\MoveBehaviour\IUpdate.ts" />
+    <TypeScriptCompile Include="ts\common\IDraw.ts" />
+    <TypeScriptCompile Include="ts\common\IUpdate.ts" />
     <TypeScriptCompile Include="ts\gameState\Unit\Behavior\BehaviorTree.ts" />
+    <TypeScriptCompile Include="ts\gameState\Unit\Behavior\SelectBehaviour\SelectOption.ts" />
+    <TypeScriptCompile Include="ts\gameState\Unit\Behavior\SelectBehaviour\SelectBehaviour.ts" />
     <TypeScriptCompile Include="ts\gameState\Unit\Behavior\MoveBehaviour\NormalMove.ts" />
-    <TypeScriptCompile Include="ts\gameState\Unit\Behavior\MoveBehaviour\IMoveBehaviour.ts" />
     <TypeScriptCompile Include="ts\gameState\Unit\UnitState\Moving.ts" />
     <TypeScriptCompile Include="ts\presentation\AnimationList.ts" />
     <TypeScriptCompile Include="ts\presentation\Animation.ts" />

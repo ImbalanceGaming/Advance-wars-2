@@ -1,5 +1,5 @@
 ﻿module AdvanceWars {
-    export class BehaviorTRee {
+    export class BehaviorTree {
         current: IBehavior;
         root: IBehavior;
         active: boolean;
